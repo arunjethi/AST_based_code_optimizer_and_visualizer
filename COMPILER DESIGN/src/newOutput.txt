@@ -1,0 +1,65 @@
+FUNCTION_DEF (main)
+  SEQUENCE
+    SEQUENCE
+      SEQUENCE
+        SEQUENCE
+          SEQUENCE
+            SEQUENCE
+              SEQUENCE
+                SEQUENCE
+                  SEQUENCE
+                    SEQUENCE
+                      DECLARATION (a)
+                        INT (15)
+                      DECLARATION (b)
+                        INT (10)
+                    DECLARATION (c)
+                      INT (1)
+                  DECLARATION (p)
+                    BINARY_EXPR (+)
+                      BINARY_EXPR (+)
+                        VAR (a)
+                        VAR (b)
+                      VAR (c)
+                SEQUENCE
+              DECLARATION (x)
+                BINARY_EXPR (+)
+                  BINARY_EXPR (+)
+                    INT (10)
+                    VAR (p)
+                  INT (63)
+            SEQUENCE
+              FUNCTION_CALL (printf)
+                EXPR_LIST
+                  STRING (""loop unrolling"")
+              FUNCTION_CALL (printf)
+                EXPR_LIST
+                  STRING (""loop unrolling"")
+              FUNCTION_CALL (printf)
+                EXPR_LIST
+                  STRING (""loop unrolling"")
+              FUNCTION_CALL (printf)
+                EXPR_LIST
+                  STRING (""loop unrolling"")
+              FUNCTION_CALL (printf)
+                EXPR_LIST
+                  STRING (""loop unrolling"")
+          FUNCTION_CALL (printf)
+            EXPR_LIST
+              STRING (""Visited once.\n"")
+        DECLARATION (d)
+          BINARY_EXPR (+)
+            VAR (a)
+            INT (8)
+      SEQUENCE
+        FUNCTION_CALL (printf)
+          EXPR_LIST
+            STRING (""I am Lucky boy\n"")
+        FUNCTION_CALL (printf)
+          EXPR_LIST
+            STRING (""I am Lucky boy\n"")
+        FUNCTION_CALL (printf)
+          EXPR_LIST
+            STRING (""I am Lucky boy\n"")
+    RETURN_STMT
+      INT (0)
