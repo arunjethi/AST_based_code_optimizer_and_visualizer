@@ -1,0 +1,116 @@
+# AST-Based Code Optimizer and Visualizer
+
+The **AST-Based Code Optimizer and Visualizer** is a tool that takes C source code, parses it into an **Abstract Syntax Tree (AST)**, and applies compiler optimizations to the tree. An AST is a tree data structure representing the syntactic structure of code. This tool implements common optimizations such as **constant folding**, **dead code elimination**, and **loop unrolling**. After optimization, the tool can regenerate optimized C code and also use **Graphviz** to generate a visual graph of the AST. These features help developers understand and improve their code by simplifying expressions, eliminating unreachable code, and visualizing program structure.
+
+## Installation
+
+**Dependencies:**
+
+You need a C compiler and parser tools. On Debian/Ubuntu:
+
+```bash
+sudo apt-get update
+sudo apt-get install gcc flex bison graphviz
+```
+
+For Windows (MSYS2), install Graphviz via Pacman:
+
+```bash
+pacman -S mingw-w64-x86_64-graphviz
+```
+
+Ensure the following are available:
+
+* **GCC** – C compiler
+* **Flex** and **Bison** – lexer and parser generators
+* **Graphviz** – for AST visualization
+
+## Usage
+
+Build the parser, lexer, and core tool:
+
+```bash
+bison -d parser.y         # parser.tab.c and parser.tab.h
+flex lexer.l              # lex.yy.c
+gcc parser.tab.c lex.yy.c ast.c ast.h main.c -o ast
+```
+
+Parse the input C code:
+
+```bash
+./ast                    # generates output.txt (AST dump)
+```
+
+Visualize AST with Graphviz:
+
+```bash
+gcc ast_to_png.c -o ast_to_png -lgvc -lcgraph
+./ast_to_png            # output: ast_output.png
+```
+
+Optimize AST:
+
+```bash
+gcc ast_optimize.c -o ast_optimize
+./ast_optimize          # optimized AST in newOutput.txt
+```
+
+Generate optimized C code:
+
+```bash
+gcc ast_to_c.c -o ast_to_c
+./ast_to_c              # writes optimizedCode.c
+```
+
+## Code Structure
+
+* **parser.y** – Grammar rules for Bison
+* **lexer.l** – Tokens for Flex
+* **main.c** – Calls parser and outputs AST
+* **ast.h / ast.c** – AST node structure and utility functions
+* **ast\_to\_png.c** – Uses Graphviz to visualize AST
+* **ast\_optimize.c** – Applies optimizations to AST
+* **ast\_to\_c.c** – Generates optimized C code from AST
+
+## Key Components
+
+### AST Node (ast.h)
+
+```c
+typedef struct ASTNode {
+    char* type;
+    char* value;
+    struct ASTNode* left;
+    struct ASTNode* right;
+    struct ASTNode* next;
+} ASTNode;
+```
+
+### AST Helpers (ast.c)
+
+* `createNode(type, value)`
+* `insertChild(parent, child)`
+* `printAST(ASTNode*, FILE*)`
+
+### Optimization (ast\_optimize.c)
+
+* `constantFold(ASTNode *root)`
+* `removeDeadCode(ASTNode *root)`
+* `unrollLoops(ASTNode *root)`
+
+### Codegen (ast\_to\_c.c)
+
+* `astToC(ASTNode *root, FILE *out)`
+
+## Contribution Guidelines
+
+Contributions are welcome! Fork the repo, make your changes, and open a pull request. Ensure your code is well-commented and adheres to C conventions.
+
+Report issues or request features via [GitHub Issues](https://github.com/kunall0880/AST_based_code_optimizer_and_visualizer/issues).
+
+
+## References
+
+* [Graphviz Documentation](https://graphviz.org/documentation/)
+* Compiler Design textbooks on AST and optimizations
+* GNU Bison & Flex manuals
